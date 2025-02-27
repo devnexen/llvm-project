@@ -312,7 +312,7 @@ INTERCEPTOR(int, ftruncate64, int fd, off64_t length) {
 #define RTSAN_MAYBE_INTERCEPT_FTRUNCATE64
 #endif
 
-#if SANITIZER_LINUX
+#if _FILE_OFFSET_BITS == 64 && SANITIZER_LINUX
 INTERCEPTOR(ssize_t, copy_file_range, int fdin, off_t *off_int, int fdout,
             off_t *off_out, size_t len, unsigned int flags) {
   __rtsan_notify_intercepted_call("copy_file_range");
