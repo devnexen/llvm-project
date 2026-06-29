@@ -523,6 +523,10 @@ void ExtTSPReorderAlgorithm::reorderBasicBlocks(BinaryFunction &BF,
   std::vector<uint64_t> BlockCounts;
   BasicBlockOrder OrigOrder;
   BF.getLayout().updateLayoutIndices();
+  size_t BfBlockSize = BF.getLayout().block_size();
+  BlockSizes.reserve(BfBlockSize);
+  BlockCounts.reserve(BfBlockSize);
+  OrigOrder.reserve(BfBlockSize);
   for (BinaryBasicBlock *BB : BF.getLayout().blocks()) {
     uint64_t Size = std::max<uint64_t>(BB->estimateSize(Emitter.MCE.get()), 1);
     BlockSizes.push_back(Size);
